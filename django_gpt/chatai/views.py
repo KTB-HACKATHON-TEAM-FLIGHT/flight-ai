@@ -6,17 +6,19 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from .models import Chat
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.contrib.auth.models import AnonymousUser
 
-openai_api_key = 'mykey'
+openai_api_key = 'openai_key'
 openai.api_key = openai_api_key
 
 def chat_openai(message):
     response = openai.ChatCompletion.create(
-        #model = "gpt-3.5-turbo",
         model = "gpt-4o",
         messages=[
-            {"role": "system", "content": "You are an helpful assistant."},  # 시스템 메시지
-            {"role": "user", "content": message},  # 사용자 메시지
+            {"role": "system", "content": "You are an helpful assistant."},  
+            {"role": "user", "content": message},  
         ]
     )
     #print(response)
@@ -27,14 +29,21 @@ def chat_openai(message):
     return html_content
 
 def chatai(request):
-    # if not request.user.is_authenticated:
-    #    return redirect('login')  # 로그인되지 않은 경우 로그인 페이지로 이동
-    
-    chats = Chat.objects.filter(user=request.user)
+    if isinstance(request.user, AnonymousUser):
+        user = None 
+    else:
+        user = request.user
+
+    chats = Chat.objects.filter(user=user) if user else []
+
     if request.method == 'POST':
         message = request.POST.get('message')
         response = chat_openai(message)
-        chat = Chat(user=request.user, message=message, response=response, created_at=timezone.now())
-        chat.save()
-        return JsonResponse({'message': message, 'response':response})        
+
+        if user:
+            chat = Chat(user=user, message=message, response=response, created_at=timezone.now())
+            chat.save()
+
+        return JsonResponse({'message': message, 'response': response})
+
     return render(request, 'chatbot.html', {'chats': chats})
