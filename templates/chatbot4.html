@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{ block.super }}
+<style>
+  body, html {
+    height: 100%;
+  }
+
+  .chat-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #202123; /* 어두운 배경색상 */
+    color: #ffffff; /* 흰색 텍스트 */
+  }
+
+  .messages-box {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .message {
+    margin-bottom: 15px;
+    list-style: none;
+  }
+
+  .message-text {
+    padding: 10px;
+    border-radius: 5px;
+    color: #000000; /* 검은색 텍스트 */
+  }
+
+  .sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+  }
+
+  .received {
+    background-color: #f1f0f0;
+    align-self: flex-start;
+  }
+
+  .message-form {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #ffffff;
+    height: 80px;
+  }
+
+  .message-input {
+    flex: 1;
+    border-radius: 0;
+    border-right: none;
+    height: 100%;
+  }
+
+  .btn-send {
+    border-radius: 0;
+    background-color: #1a6adb; /* 어두운 색상으로 변경 */
+    border-color: #1a6adb; /* 어두운 색상으로 변경 */
+    color: #ffffff; /* 흰색으로 변경 */
+  }
+
+  .card-header {
+    background-color: #202123; /* 검은색 계열로 변경 */
+    color: #ffffff; /* 흰색으로 변경 */
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+  <div class="card flex-grow-1" style="background-color: #ffffff;">
+    <div class="card-header">채팅</div>
+    <div class="card-body messages-box">
+      <ul class="list-unstyled messages-list">
+        <!-- 채팅 메시지 영역 -->
+        <li class="message received">
+          <div class="message-text">
+            <div class="message-sender">
+              <b>AI 챗봇</b>
+            </div>
+            <div class="message-content">
+              안녕하세요, 저는 여러분의 AI 챗봇입니다. 궁금한 것이 있으면 무엇이든 물어보세요.
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <form class="message-form">
+    {% csrf_token %}
+    <div class="input-group">
+      <input type="text" class="form-control message-input" placeholder="메시지를 입력하세요...">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-primary btn-send">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="#ffffff" d="M3 3v18l8-6-8-6zm9 12l8-6-8-6v12z"/>
+          </svg>
+          보내기
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+//실시간으로 사용자가 입력한 채팅 메시지를 보내고 서버에서 응답을 받아와 화면에 표시하는 기능 구현       
+// 1 DOM 요소 가져오기 - DOM 요소를 선택하기 위해 각 요소의 클래스에 해당하는 선택자를 사용한다.
+const messagesList = document.querySelector('.messages-list'); // 채팅 메시지가 표시될 리스트
+const messageForm = document.querySelector('.message-form'); // 메시지 입력 폼
+const messageInput = document.querySelector('.message-input'); // 메시지 입력 필드
+
+// 2 폼 제출 이벤트 리스너 등록 - 사용자가 메시지를 입력하고 폼을 제출할 때의 동작을 정의합니다. 
+// 이벤트 리스너는 폼이 제출되면 작동하고, 기본 동작을 취소하여 페이지를 새로고침하지 않습니다.
+//폼 제출 이벤트에 대한 리스너를 추가한다.
+messageForm.addEventListener('submit', (event) => {
+  event.preventDefault(); // 기본 제출 동작을 막는다.
+
+  // 입력된 메시지를 가져온다.
+  const message = messageInput.value.trim();
+
+  // 입력된 메시지가 비어 있는지 확인한다.
+  if (message.length === 0) {
+    return; // 메시지가 비어 있다면 아무것도 하지 않고 종료한다.
+  }
+
+  // 보낸 메시지를 나타내는 새로운 리스트 아이템을 생성한다.
+  const messageItem = document.createElement('li');
+  messageItem.classList.add('message', 'sent'); // 'message'와 'sent' 클래스를 추가한다.
+  messageItem.innerHTML = `
+      <div class="message-text">
+          <div class="message-sender">
+              <b>You</b> <!-- 보낸 사람의 이름을 표시한다. -->
+          </div>
+          <div class="message-content">
+              ${message} <!-- 보낸 메시지를 표시한다. -->
+          </div>
+      </div>`;
+  messagesList.appendChild(messageItem); // 메시지를 메시지 리스트에 추가한다.
+
+  messageInput.value = ''; // 메시지 입력 필드를 비운다.
+  
+  
+
+</script>
+
+{% endblock %}
