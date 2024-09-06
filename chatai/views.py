@@ -6,9 +6,9 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from .models import Chat
 from django.utils import timezone
+from django.conf import settings
 
-openai_api_key = ''
-openai.api_key = openai_api_key
+openai.api_key = settings.OPENAI_API_KEY
 
 def chat_openai(message):
     prompt = f"""

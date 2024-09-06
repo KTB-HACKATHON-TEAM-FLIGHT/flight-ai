@@ -17,7 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="CHAT PPT AI 서버 API 명세서",
+        default_version="0",
+        description="CHAT PPT AI 서버  명세서입니다.",
+    ),
+    public=True,
+    permission_classes=[AllowAny],
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('chatai.urls'))
+    path('', include('chatai.urls')),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
