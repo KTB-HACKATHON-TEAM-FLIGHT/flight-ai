@@ -80,6 +80,7 @@ jobs:
             # 패키지 업데이트 및 Python 설치
             sudo apt update
             sudo apt install -y python3.10 python3-venv  # python3-venv 설치 추가
+            sudo apt install python3-dev
             sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
             sudo apt-get install -y python3-apt
             
@@ -93,6 +94,7 @@ jobs:
             # pip 업그레이드 및 필요한 패키지 설치 (가상환경 내에서)
             pip install --upgrade pip
             pip install gunicorn
+            pip install openai
             pip install django djangorestframework drf-yasg
             pip install -r requirements.txt --no-deps
             
