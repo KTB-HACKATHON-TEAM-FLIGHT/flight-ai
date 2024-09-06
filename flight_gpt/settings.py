@@ -35,7 +35,9 @@ SECRET_KEY = get_secret("SECRET_KEY")
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "http://localhost:3000", "43.201.216.61", '127.0.0.1', '0.0.0.0', 'localhost', 'ai.chatppt.site', 'www.ai.chatppt.site', 'api.chatppt.site', 'www.api.chatppt.site',
+]
 
 
 # Application definition
