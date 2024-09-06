@@ -55,8 +55,11 @@ jobs:
           EOF
           
           # 파일을 처음부터 EC2 인스턴스의 /home/ubuntu/chatai 디렉토리에 업로드
-          scp -o StrictHostKeyChecking=no -i key.pem ./key.pem $EC2_USER@$EC2_HOST:/home/ubuntu/chatai
-          
+          scp -o StrictHostKeyChecking=no -i key.pem ./key.pem $EC2_USER@$EC2_HOST:/home/ubuntu/chatai/key.pem
+
+          ehco "아래는 파일 업로드 시작"
+          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai
+
           # 로컬 key.pem 파일 삭제
           rm key.pem
           
