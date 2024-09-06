@@ -32,7 +32,6 @@ def get_secret(setting):
         raise ImproperlyConfigured(error_msg)
 
 SECRET_KEY = get_secret("SECRET_KEY")
-OPENAI_API_KEY = get_secret("OPENAI_API_KEY")
 
 DEBUG = True
 
@@ -166,3 +165,5 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

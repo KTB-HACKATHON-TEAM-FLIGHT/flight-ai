@@ -4,12 +4,15 @@ import requests
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 
-from flight_gpt import settings
+import my_settings
+from chatai.models import Chat
+
+openai.api_key = my_settings.OPENAI_API_KEY
 
 
 def get_image(query):
-    api_key = ""
-    search_engine_id = ""
+    api_key = my_settings.GOOGLE_API_KEY
+    search_engine_id = "b113b067d5f16426a"
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={search_engine_id}&key={api_key}"
 
     response = requests.get(url)
@@ -26,8 +29,8 @@ def get_image(query):
 
 
 def google_search(query):
-    api_key = ""
-    search_engine_id = ""
+    api_key = my_settings.GOOGLE_API_KEY
+    search_engine_id = "b113b067d5f16426a"
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={search_engine_id}&key={api_key}"
 
     response = requests.get(url)
@@ -58,9 +61,6 @@ def generate_rag_response(query):
         return "No relevant search results found."
 
 
-openai.api_key = settings.OPENAI_API_KEY
-
-
 # 메인 gpt코드
 def chat_openai(message):
     topic = get_topic(message)
@@ -78,7 +78,7 @@ def chat_openai(message):
             2. **Slide 2 (Contents)**:
                 - Title: "Contents".
                 - List of key topics or sections to be covered in the presentation.
-                
+
             3. **Second-to-Last Slide (Q&A)**:
                 - Title: "Q&A".
                 - Add a brief message encouraging questions or feedback.
@@ -106,16 +106,16 @@ def chat_openai(message):
             2. **Content Structure**: 
                 - For the "Contents" slide, use an ordered list (`<ol>`) inside the section.
                 - For other slides, use unordered lists (`<ul>`) to explain key points, with appropriate line spacing and font size.
-                
+
             3. **Images**:
                 - Insert images using `<img>` tags.
                 - Style the images with `max-width: 100%`, `max-height: 600px`, and ensure they are centered using `display: block; margin: 0 auto`.
                 - Images should have a small border-radius for rounded corners.
-                
+
             4. **Formatting**: 
                 - Keep the background color light and neutral (`#f7f7f7`).
                 - Use font sizes for headings (e.g., `36px` for main titles, `28px` for subtitles) and ensure the layout is clean.
-                
+
             5. **HTML output**: Generate only HTML code with no additional explanations. The slides should be structured similarly to the following example:
 
             ---
@@ -152,12 +152,14 @@ def get_topic(message):
     the given content: '''{message}'''
     """
 
+    encoded_message = prompt.encode('utf-8')
+    encoded = message.encode('utf-8')
     response = openai.ChatCompletion.create(
         # model = "gpt-3.5-turbo",
         model="gpt-4o",
         messages=[
-            {"role": "system", "content": prompt},  # 시스템 메시지
-            {"role": "user", "content": message},  # 사용자 메시지
+            {"role": "system", "content": encoded_message.decode('utf-8')},  # 시스템 메시지
+            {"role": "user", "content": encoded.decode('utf-8')},  # 사용자 메시지
         ]
     )
 
@@ -171,4 +173,4 @@ def chatai(request):
     message = request.data['request']
     response = chat_openai(message)
 
-    return JsonResponse({'result': response})
+    return JsonResponse({'response': response})
