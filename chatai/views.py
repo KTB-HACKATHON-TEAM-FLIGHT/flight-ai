@@ -12,7 +12,7 @@ openai.api_key = my_settings.OPENAI_API_KEY
 
 def get_image(query):
     api_key = my_settings.GOOGLE_API_KEY
-    search_engine_id = "b113b067d5f16426a"
+    search_engine_id = "a7c398c46228a4fdb"
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={search_engine_id}&key={api_key}"
 
     response = requests.get(url)
@@ -30,7 +30,7 @@ def get_image(query):
 
 def google_search(query):
     api_key = my_settings.GOOGLE_API_KEY
-    search_engine_id = "b113b067d5f16426a"
+    search_engine_id = "a7c398c46228a4fdb"
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={search_engine_id}&key={api_key}"
 
     response = requests.get(url)
