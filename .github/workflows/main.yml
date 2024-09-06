@@ -19,8 +19,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install django djangorestframework drf-yasg
-          pip install -r requirements.txt
-        working-directory: chatai
+          pip install -r requirement.txt
 
   upload:
     runs-on: ubuntu-latest
@@ -34,7 +33,7 @@ jobs:
         with:
           name: "secrets.json"
           json: ${{ secrets.SECRETS }}
-          dir: 'chatai'
+          dir: './chatai' 
 
       - name: Upload Code to EC2
         env:
@@ -48,7 +47,7 @@ jobs:
           mkdir -p /home/ubuntu/chatai/logs
           mkdir -p /home/ubuntu/chatai/staticfiles
           EOF
-          scp -o StrictHostKeyChecking=no -i key.pem -r ./chatai $EC2_USER@$EC2_HOST:/home/ubuntu/
+          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai  # 루트 디렉토리에서 모든 파일 업로드
           rm key.pem
 
   deploy:
@@ -81,7 +80,7 @@ jobs:
           source venv/bin/activate        
 
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirement.txt
 
           python manage.py migrate
           python manage.py collectstatic --noinput
