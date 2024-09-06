@@ -20,7 +20,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install django djangorestframework drf-yasg
           pip install -r requirements.txt --no-deps
-
   upload:
     runs-on: ubuntu-latest
     needs: build
@@ -43,11 +42,19 @@ jobs:
         run: |
           echo "${{ secrets.EC2_KEY }}" > key.pem
           chmod 400 key.pem
+          
+          # SSH로 연결하여 작업 처리 (소유자 변경 생략)
           ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << EOF
-          mkdir -p /home/ubuntu/chatai/logs
-          mkdir -p /home/ubuntu/chatai/staticfiles
+            # 필요한 디렉토리 생성
+            mkdir -p /home/ubuntu/chatai/logs
+            mkdir -p /home/ubuntu/chatai/staticfiles
           EOF
-          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai  # 루트 디렉토리에서 모든 파일 업로드
+          
+          # 프로젝트 파일을 한 번에 EC2 인스턴스의 /home/ubuntu/chatai 디렉토리에 업로드
+          echo "아래는 파일 업로드 시작"
+          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai
+          
+          # 로컬 key.pem 파일 삭제
           rm key.pem
           
   deploy:
@@ -79,7 +86,6 @@ jobs:
           pip install --upgrade pip
           pip install gunicorn
           pip install django djangorestframework drf-yasg
-
           pip install -r requirements.txt --no-deps
           
           python manage.py migrate
