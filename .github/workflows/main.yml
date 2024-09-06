@@ -88,6 +88,8 @@ jobs:
           
           pip install --upgrade pip
           pip install gunicorn
+          pip install django djangorestframework drf-yasg
+
           pip install -r requirements.txt --no-deps
           
           python manage.py migrate
