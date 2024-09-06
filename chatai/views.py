@@ -8,8 +8,8 @@ from flight_gpt import settings
 
 
 def get_image(query):
-    api_key = "AIzaSyA8eeBVWbpqNye6SBLHSPDlBbo3Bm9bxt0"
-    search_engine_id = "b113b067d5f16426a"
+    api_key = ""
+    search_engine_id = ""
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={search_engine_id}&key={api_key}"
 
     response = requests.get(url)
@@ -26,8 +26,8 @@ def get_image(query):
 
 
 def google_search(query):
-    api_key = "AIzaSyA8eeBVWbpqNye6SBLHSPDlBbo3Bm9bxt0"
-    search_engine_id = "b113b067d5f16426a"
+    api_key = ""
+    search_engine_id = ""
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={search_engine_id}&key={api_key}"
 
     response = requests.get(url)
