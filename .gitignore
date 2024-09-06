@@ -176,3 +176,4 @@ cython_debug/
 
 # my_setting.py
 secrets.json
+my_settings.py
