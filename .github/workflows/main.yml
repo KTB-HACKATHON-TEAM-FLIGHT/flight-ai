@@ -43,24 +43,11 @@ jobs:
         run: |
           echo "${{ secrets.EC2_KEY }}" > key.pem
           chmod 400 key.pem
-          
-          # SSH로 연결하여 작업 처리
           ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << EOF
-            # /home/ubuntu/chatai 디렉토리의 소유자를 ubuntu로 설정
-            sudo chown -R ubuntu:ubuntu /home/ubuntu/chatai
-            
-            # 필요한 디렉토리 생성
-            mkdir -p /home/ubuntu/chatai/logs
-            mkdir -p /home/ubuntu/chatai/staticfiles
+          mkdir -p /home/ubuntu/chatai/logs
+          mkdir -p /home/ubuntu/chatai/staticfiles
           EOF
-          
-          # 파일을 처음부터 EC2 인스턴스의 /home/ubuntu/chatai 디렉토리에 업로드
-          scp -o StrictHostKeyChecking=no -i key.pem ./key.pem $EC2_USER@$EC2_HOST:/home/ubuntu/chatai/key.pem
-
-          ehco "아래는 파일 업로드 시작"
-          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai
-
-          # 로컬 key.pem 파일 삭제
+          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai  # 루트 디렉토리에서 모든 파일 업로드
           rm key.pem
           
   deploy:
