@@ -53,7 +53,6 @@ jobs:
 
             # key.pem 파일을 chatai 디렉토리로 이동 후 삭제
             mv /home/ubuntu/key.pem /home/ubuntu/chatai/key.pem
-            rm /home/ubuntu/key.pem
           EOF
 
           # 파일 업로드
