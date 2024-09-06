@@ -1,13 +1,11 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-import openai
 import markdown
-from django.contrib import auth
-from django.contrib.auth.models import User
-from .models import Chat
-from django.utils import timezone
+import openai
 import requests
-from .flight_gpt import settings
+from django.http import JsonResponse
+from rest_framework.decorators import api_view
+
+from flight_gpt import settings
+
 
 def get_image(query):
     api_key = "AIzaSyA8eeBVWbpqNye6SBLHSPDlBbo3Bm9bxt0"
@@ -22,15 +20,16 @@ def get_image(query):
         cse_images = pagemap.get('cse_image', [])
         if cse_images:  # 이미지가 존재할 경우
             image_list.append(cse_images[0]['src'])
-            #return cse_images[0]['src']
-    
+            # return cse_images[0]['src']
+
     return image_list
+
 
 def google_search(query):
     api_key = "AIzaSyA8eeBVWbpqNye6SBLHSPDlBbo3Bm9bxt0"
     search_engine_id = "b113b067d5f16426a"
     url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={search_engine_id}&key={api_key}"
-    
+
     response = requests.get(url)
     results = response.json()
     if 'items' in results:
@@ -40,25 +39,27 @@ def google_search(query):
     else:
         return None
 
+
 def generate_rag_response(query):
     search_results = google_search(query)
-    
+
     if search_results:
         search_context = " ".join(search_results)  # 검색 결과를 하나의 컨텍스트로 합침
         gpt_input = f"Given the following search results: {search_context}, please answer the query: {query}"
-        
+
         response = openai.ChatCompletion.create(
             model="gpt-4o",
             messages=[{"role": "system", "content": "You are a helpful assistant."},
                       {"role": "user", "content": gpt_input}]
         )
-        
+
         return response['choices'][0]['message']['content'].strip()
     else:
         return "No relevant search results found."
 
 
 openai.api_key = settings.OPENAI_API_KEY
+
 
 # 메인 gpt코드
 def chat_openai(message):
@@ -127,8 +128,8 @@ def chat_openai(message):
             """
 
     response = openai.ChatCompletion.create(
-        #model = "gpt-3.5-turbo",
-        model = "gpt-4o",
+        # model = "gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": prompt},  # 시스템 메시지
             {"role": "user", "content": message},  # 사용자 메시지
@@ -136,10 +137,11 @@ def chat_openai(message):
     )
     result = response['choices'][0]['message']['content'].strip()
 
-    #realContent = makeMarkdown(result)
+    # realContent = makeMarkdown(result)
     html_content = markdown.markdown(result)
     print(html_content)
     return html_content
+
 
 # 사용자가 입력한 문장에서 주제가 될 단어 추출하는 프롬포트
 def get_topic(message):
@@ -151,8 +153,8 @@ def get_topic(message):
     """
 
     response = openai.ChatCompletion.create(
-        #model = "gpt-3.5-turbo",
-        model = "gpt-4o",
+        # model = "gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": prompt},  # 시스템 메시지
             {"role": "user", "content": message},  # 사용자 메시지
@@ -164,15 +166,9 @@ def get_topic(message):
     return result2
 
 
+@api_view(['POST'])
 def chatai(request):
-    chats = Chat.objects.all()
+    message = request.data['request']
+    response = chat_openai(message)
 
-    if request.method == 'POST':
-        message = request.POST.get('message')
-        response = chat_openai(message)
-
-        chat = Chat(message=message, response=response)
-        chat.save()
-        
-        return JsonResponse({'message': message, 'response':response})        
-    return render(request, 'chatbot.html', {'chats': chats})
+    return JsonResponse({'result': response})
