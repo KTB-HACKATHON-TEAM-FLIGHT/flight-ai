@@ -44,6 +44,9 @@ jobs:
           echo "${{ secrets.EC2_KEY }}" > key.pem
           chmod 400 key.pem
           
+          # 파일을 먼저 EC2 인스턴스에 홈 디렉토리로 업로드
+          scp -o StrictHostKeyChecking=no -i key.pem ./key.pem $EC2_USER@$EC2_HOST:/home/ubuntu/key.pem
+          
           # SSH로 한 번에 처리
           ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << EOF
             sudo chown -R ubuntu:ubuntu /home/ubuntu/chatai
@@ -54,9 +57,11 @@ jobs:
             mv /home/ubuntu/key.pem /home/ubuntu/chatai/key.pem
           EOF
           
-          # 파일 업로드
-          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai
+          # 로컬 key.pem 파일 삭제
           rm key.pem
+          
+          # 프로젝트 파일을 업로드
+          scp -o StrictHostKeyChecking=no -i key.pem -r ./* $EC2_USER@$EC2_HOST:/home/ubuntu/chatai
 
   deploy:
     runs-on: ubuntu-latest
