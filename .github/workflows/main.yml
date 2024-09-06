@@ -93,6 +93,7 @@ jobs:
             # pip 업그레이드 및 필요한 패키지 설치
             pip install --upgrade pip
             pip install gunicorn
+            pip install django-cors-headers
             pip install openai
             pip install django djangorestframework drf-yasg
             pip install -r requirements.txt --no-deps
