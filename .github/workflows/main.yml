@@ -20,18 +20,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install pip-tools
 
-      - name: Move requirements.txt to requirements.in
+      - name: Move requirement.txt to requirements.in (if exists)
         run: |
-          mv requirements.txt requirements.in
+          then mv requirement.txt requirements.in
 
       - name: Compile Dependencies
         run: |
-          # Compile requirements.txt from requirements.in
           pip-compile requirements.in
-
+          
       - name: Install Dependencies
         run: |
-          # Install dependencies from compiled requirements.txt
           pip install -r requirements.txt
 
   upload:
