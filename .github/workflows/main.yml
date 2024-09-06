@@ -19,7 +19,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install django djangorestframework drf-yasg
-          pip install -r requirement.txt
+          pip install -r requirements.txt --force-reinstall
   upload:
     runs-on: ubuntu-latest
     needs: build
@@ -73,7 +73,7 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate        
           pip install --upgrade pip
-          pip install -r requirement.txt
+          pip install -r requirements.txt --force-reinstall
           python manage.py migrate
           python manage.py collectstatic --noinput
           nohup gunicorn --bind 0.0.0.0:8000 chatai.wsgi:application \
