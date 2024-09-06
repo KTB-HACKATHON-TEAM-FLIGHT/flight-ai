@@ -263,7 +263,7 @@ PyYAML==6.0.1
 queuelib==1.7.0
 redis==3.5.3
 regex==2023.12.25
-requests==2.31.0
+requests>=2.31.0,<=2.32.2
 requests-file==2.1.0
 requests-toolbelt==0.10.1
 resampy==0.4.3
@@ -305,7 +305,6 @@ tensorboard==2.16.2
 tensorboard-data-server==0.7.2
 tensorboardX==2.6.2.2
 tensorflow==2.12.0
-tensorflow-intel==2.12.0
 tensorflow-estimator==2.12.0
 tensorflow-io-gcs-filesystem==0.31.0
 termcolor==2.3.0
