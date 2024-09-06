@@ -77,23 +77,20 @@ jobs:
             # 기존 gunicorn 프로세스 종료
             pkill -9 gunicorn || true
             
-            # 패키지 업데이트 및 Python 설치
+            # 패키지 업데이트 및 Python 3.10 설치
             sudo apt update
-            sudo apt install -y python3.10
-            sudo apt-get install python3.10-venv # python3-venv 설치 추가
-            sudo apt install python3-dev
-            sudo apt-get install python3-dev 
+            sudo apt install -y python3.10 python3.10-venv python3.10-dev
             sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
             sudo apt-get install -y python3-apt
-            
+
             # 프로젝트 디렉토리로 이동
             cd /home/ubuntu/chatai
             
-            # 가상환경 생성 및 활성화
-            python3 -m venv venv
+            # 가상환경을 Python 3.10으로 생성
+            python3.10 -m venv venv
             source venv/bin/activate
             
-            # pip 업그레이드 및 필요한 패키지 설치 (가상환경 내에서)
+            # pip 업그레이드 및 필요한 패키지 설치
             pip install --upgrade pip
             pip install gunicorn
             pip install openai
