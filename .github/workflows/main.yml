@@ -41,8 +41,8 @@ jobs:
           EC2_KEY: ${{ secrets.EC2_KEY }}
         run: |
           echo "${{ secrets.EC2_KEY }}" > key.pem
-          chmod 400 key.pem
-          
+          chmod 775 key.pem
+
           # SSH로 연결하여 작업 처리 (소유자 변경 생략)
           ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << EOF
             # 필요한 디렉토리 생성
