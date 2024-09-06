@@ -74,57 +74,57 @@ jobs:
           
           ssh -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST << EOF
           
-          # 기존 gunicorn 프로세스 종료
-          pkill -9 gunicorn || true
-
-          # 패키지 업데이트 및 Python 설치
-          sudo apt update
-          sudo apt install -y python3.10
-          sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
-          sudo apt-get install -y python3-apt
-
-          # 프로젝트 디렉토리로 이동
-          cd /home/ubuntu/chatai
-
-          # 가상환경 생성 및 활성화
-          python3 -m venv venv
-          source venv/bin/activate
-
-          # pip 업그레이드 및 필요한 패키지 설치 (가상환경 내에서)
-          pip install --upgrade pip
-          pip install gunicorn
-          pip install django djangorestframework drf-yasg
-          pip install -r requirements.txt --no-deps
-          
-          # Django migration 및 static 파일 처리
-          python manage.py migrate
-          python manage.py collectstatic --noinput
-          
-          # Gunicorn 실행
-          nohup gunicorn --bind 0.0.0.0:8000 chatai.wsgi:application \
-            --workers 3 \
-            --timeout 120 \
-            --access-logfile logs/gunicorn-access.log \
-            --error-logfile logs/gunicorn-error.log &
-
-          # Nginx 재시작
-          sleep 10
-          sudo service nginx restart
-          
-          # Gunicorn 프로세스 및 로그 확인
-          echo "Checking Gunicorn processes:"
-          ps aux | grep gunicorn
-          
-          echo "Checking Gunicorn logs:"
-          tail -n 20 logs/gunicorn-access.log
-          tail -n 20 logs/gunicorn-error.log
-          
-          # 서비스 상태 확인
-          echo "Testing service response:"
-          curl -I http://localhost:8000
-          
-          echo "Checking Nginx status:"
-          sudo systemctl status nginx
+            # 기존 gunicorn 프로세스 종료
+            pkill -9 gunicorn || true
+            
+            # 패키지 업데이트 및 Python 설치
+            sudo apt update
+            sudo apt install -y python3.10 python3-venv  # python3-venv 설치 추가
+            sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
+            sudo apt-get install -y python3-apt
+            
+            # 프로젝트 디렉토리로 이동
+            cd /home/ubuntu/chatai
+            
+            # 가상환경 생성 및 활성화
+            python3 -m venv venv
+            source venv/bin/activate
+            
+            # pip 업그레이드 및 필요한 패키지 설치 (가상환경 내에서)
+            pip install --upgrade pip
+            pip install gunicorn
+            pip install django djangorestframework drf-yasg
+            pip install -r requirements.txt --no-deps
+            
+            # Django migration 및 static 파일 처리
+            python manage.py migrate
+            python manage.py collectstatic --noinput
+            
+            # Gunicorn 실행
+            nohup gunicorn --bind 0.0.0.0:8000 chatai.wsgi:application \
+              --workers 3 \
+              --timeout 120 \
+              --access-logfile logs/gunicorn-access.log \
+              --error-logfile logs/gunicorn-error.log &
+            
+            # Nginx 재시작
+            sleep 10
+            sudo service nginx restart
+            
+            # Gunicorn 프로세스 및 로그 확인
+            echo "Checking Gunicorn processes:"
+            ps aux | grep gunicorn
+            
+            echo "Checking Gunicorn logs:"
+            tail -n 20 logs/gunicorn-access.log
+            tail -n 20 logs/gunicorn-error.log
+            
+            # 서비스 상태 확인
+            echo "Testing service response:"
+            curl -I http://localhost:8000
+            
+            echo "Checking Nginx status:"
+            sudo systemctl status nginx
           EOF
           
           # 로컬 key.pem 파일 삭제
