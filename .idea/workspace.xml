@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a5d21c6-0b57-4e55-8315-999de316f84d" name="Changes" comment="feature: 라이브러리">
+    <list default="true" id="1a5d21c6-0b57-4e55-8315-999de316f84d" name="Changes" comment="fix: 에러 수정">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatai/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatai/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatai/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatai/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flight_gpt/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/flight_gpt/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/secrets.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,31 +24,31 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
-}</component>
+        &quot;associatedIndex&quot;: 3
+        }</component>
   <component name="ProjectId" id="2lgiuEojU7kwe9pIsUTdfwXBybd" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.aiServer.executor&quot;: &quot;Run&quot;,
-    &quot;Python.runserver.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/hl347/Desktop/base_storage_location/project/ktbHackathonTeamFlight/aiServer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.aiServer.executor": "Run",
+    "Python.runserver.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/hl347/Desktop/base_storage_location/project/ktbHackathonTeamFlight/aiServer",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Python.runserver">
     <configuration name="runserver" type="PythonConfigurationType" factoryName="Python">
       <module name="aiServer" />
@@ -115,7 +114,8 @@
       <option name="presentableId" value="Default" />
       <updated>1725608341877</updated>
       <workItem from="1725608343342" duration="7541000" />
-      <workItem from="1725615928462" duration="668000" />
+      <workItem from="1725615928462" duration="1114000" />
+      <workItem from="1725617445058" duration="1731000" />
     </task>
     <task id="LOCAL-00001" summary="feature: cors 및 swagger 설정">
       <option name="closed" value="true" />
@@ -133,7 +133,47 @@
       <option name="project" value="LOCAL" />
       <updated>1725615521744</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="remove: 파일삭제">
+      <option name="closed" value="true" />
+      <created>1725616623023</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1725616623024</updated>
+    </task>
+    <task id="LOCAL-00004" summary="docs: gitignore 파일">
+      <option name="closed" value="true" />
+      <created>1725616639572</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1725616639572</updated>
+    </task>
+    <task id="LOCAL-00005" summary="docs: 파일">
+      <option name="closed" value="true" />
+      <created>1725616664609</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1725616664609</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feature: api 연결">
+      <option name="closed" value="true" />
+      <created>1725616748712</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1725616748712</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix: 에러 수정">
+      <option name="closed" value="true" />
+      <created>1725618202990</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1725618202990</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -165,9 +205,14 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feature: cors 및 swagger 설정" />
     <MESSAGE value="feature: 라이브러리" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: 라이브러리" />
+    <MESSAGE value="remove: 파일삭제" />
+    <MESSAGE value="docs: gitignore 파일" />
+    <MESSAGE value="docs: 파일" />
+    <MESSAGE value="feature: api 연결" />
+    <MESSAGE value="fix: 에러 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 에러 수정" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/aiServer$runserver.coverage" NAME="runserver Coverage Results" MODIFIED="1725616231048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/aiServer$runserver.coverage" NAME="runserver Coverage Results" MODIFIED="1725618905260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
