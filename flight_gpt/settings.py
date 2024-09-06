@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 secret_file = os.path.join(BASE_DIR, 'secrets.json')
 
-with open(secret_file) as f:
+with open('secrets.json', 'r', encoding='utf-8') as f:  # encoding='utf-8' 추가
     secrets = json.loads(f.read())
 
 
